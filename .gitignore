@@ -1,0 +1,25 @@
+# MacOS
+
+.DS_Store
+
+# SPM
+
+.build
+.swiftpm
+/Package.resolved
+
+# Fastlane
+
+/**/fastlane/*
+!/**/fastlane/*file*
+!/**/fastlane/.env*
+
+# Tuist
+
+/**/Derived/
+/**/*.xcodeproj/
+/**/*.xcworkspace/
+
+# Custom
+
+.ignore
