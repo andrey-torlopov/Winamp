@@ -1,24 +1,29 @@
-//
-//  ContentView.swift
-//  Winamp
-//
-//  Created by Andrey Torlopov on 14.03.2026.
-//
-
+import SwiftData
 import SwiftUI
 
 struct ContentView: View {
+    @Environment(\.modelContext) private var modelContext
+    @State private var viewModel: WinampViewModel?
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        Group {
+            if let viewModel {
+                WinampRootView(viewModel: viewModel)
+            } else {
+                ProgressView()
+                    .tint(.white)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .background(WinampTheme.background.ignoresSafeArea())
+            }
         }
-        .padding()
+        .task {
+            guard viewModel == nil else { return }
+            viewModel = WinampViewModel(context: modelContext)
+        }
     }
 }
 
 #Preview {
     ContentView()
+        .modelContainer(for: TrackItem.self, inMemory: true)
 }
